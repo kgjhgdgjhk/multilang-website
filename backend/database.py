@@ -3,7 +3,7 @@
 # قاعدة بيانات وهمية في الذاكرة
 fake_db = {"users": []}
 
-# Session وهمية لتوافق الـ Depends في FastAPI
+
 class Session:
     def __init__(self):
         self.closed = False
@@ -14,7 +14,7 @@ class Session:
     def rollback(self):
         pass
 
-# مثال على كائن واحد يستخدم في get_db
+
 db_instance = Session()
 
 
@@ -23,3 +23,4 @@ def get_db():
 
 def init_db():
     pass
+
