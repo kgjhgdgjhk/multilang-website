@@ -205,7 +205,11 @@ async def dashboard(request: Request, lang: str = "en"):
         "lang": lang,
         "translations": translations.get(lang, translations["en"])
     })
-
+# في نهاية main.py
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    import os
+    
+    # على Render يأخذ المنفذ من متغير البيئة
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
