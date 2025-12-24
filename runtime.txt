@@ -1,2 +1,1 @@
-# في مجلد multilang-website (ليس داخل backend أو frontend)
-echo "python-3.12.10" > runtime.txt
+python-3.12.10
