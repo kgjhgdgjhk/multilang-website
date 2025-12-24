@@ -17,10 +17,9 @@ class Session:
 # مثال على كائن واحد يستخدم في get_db
 db_instance = Session()
 
-# دالة get_db للتوافق مع Depends
+
 def get_db():
     yield db_instance
 
-# دالة init_db وهمية لتوافق main.py
 def init_db():
     pass
