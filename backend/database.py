@@ -1,17 +1,27 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from .config import settings
-from .models import Base
+# database.py - نسخة بدون SQLAlchemy
 
-engine = create_engine(settings.database_url, connect_args={"check_same_thread": False})
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+# قاعدة بيانات وهمية في الذاكرة
+fake_db = {"users": []}
 
-def init_db():
-    Base.metadata.create_all(bind=engine)
+# Session وهمية لتوافق الـ Depends في FastAPI
+class Session:
+    def __init__(self):
+        self.closed = False
+    def close(self):
+        self.closed = True
+    def commit(self):
+        pass
+    def rollback(self):
+        pass
 
+# مثال على كائن واحد يستخدم في get_db
+db_instance = Session()
+
+# دالة get_db للتوافق مع Depends
 def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+    yield db_instance
+
+# دالة init_db وهمية
+def init_db():
+    # لا حاجة لأي شيء، فقط لتوافق الكود مع main.py
+    pass
