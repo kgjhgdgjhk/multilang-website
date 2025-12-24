@@ -1,15 +1,28 @@
-from sqlalchemy import Column, Integer, String, Boolean
-from sqlalchemy.ext.declarative import declarative_base
+# models وهمية
+class User:
+    def __init__(self, username, email, full_name, hashed_password, language="en"):
+        self.username = username
+        self.email = email
+        self.full_name = full_name
+        self.hashed_password = hashed_password
+        self.language = language
 
-Base = declarative_base()
+# قاعدة بيانات وهمية في الذاكرة
+fake_db = {"users": []}
 
-class User(Base):
-    __tablename__ = "users"
-    
-    id = Column(Integer, primary_key=True, index=True)
-    username = Column(String, unique=True, index=True)
-    email = Column(String, unique=True, index=True)
-    full_name = Column(String)
-    hashed_password = Column(String)
-    disabled = Column(Boolean, default=False)
-    language = Column(String, default="en")
+# دالة get_db وهمية
+class Session:
+    def __init__(self):
+        self.closed = False
+    def close(self):
+        self.closed = True
+    def commit(self):
+        pass
+    def rollback(self):
+        pass
+db_instance = Session()
+
+def get_db():
+    return db_instance
+
+models = type('Models', (), {'User': User})()

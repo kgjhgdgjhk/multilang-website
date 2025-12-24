@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException, Request, Form
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from sqlalchemy.orm import Session
+
 from typing import Optional
 import json
 import os
@@ -132,27 +132,15 @@ async def login_page(request: Request, lang: str = "en"):
     })
 
 @app.post("/api/login")
-async def login(
-    username: str = Form(...),
-    password: str = Form(...),
-    db: Session = Depends(get_db)
-):
-    # هنا يجب التحقق من بيانات المستخدم
-    # هذا مثال مبسط
-    user = db.query(models.User).filter(models.User.username == username).first()
+async def login(username: str = Form(...), password: str = Form(...)):
+    user = next((u for u in fake_db["users"] if u.username == username), None)
+    if not user or user.hashed_password != password:  # تحقق بسيط
+        return JSONResponse(status_code=401, content={"message": "Invalid credentials"})
     
-    if not user or not auth.verify_password(password, user.hashed_password):
-        return JSONResponse(
-            status_code=401,
-            content={"message": "Invalid credentials"}
-        )
-    
-    access_token = auth.create_access_token(
-        data={"sub": user.username},
-        expires_delta=timedelta(minutes=auth.settings.access_token_expire_minutes)
-    )
-    
+    # توليد توكن وهمي
+    access_token = f"fake-token-for-{user.username}"
     return {"access_token": access_token, "token_type": "bearer"}
+
 
 @app.get("/register")
 async def register_page(request: Request, lang: str = "en"):
@@ -168,35 +156,19 @@ async def register(
     email: str = Form(...),
     full_name: str = Form(...),
     password: str = Form(...),
-    language: str = Form("en"),
-    db: Session = Depends(get_db)
+    language: str = Form("en")
 ):
-    # التحقق من وجود المستخدم مسبقاً
-    existing_user = db.query(models.User).filter(
-        (models.User.username == username) | (models.User.email == email)
-    ).first()
-    
+    # التحقق من المستخدمين الموجودين
+    existing_user = next((u for u in fake_db["users"] if u.username == username or u.email == email), None)
     if existing_user:
-        return JSONResponse(
-            status_code=400,
-            content={"message": "Username or email already exists"}
-        )
+        return JSONResponse(status_code=400, content={"message": "Username or email already exists"})
     
-    # إنشاء مستخدم جديد
-    hashed_password = auth.get_password_hash(password)
-    db_user = models.User(
-        username=username,
-        email=email,
-        full_name=full_name,
-        hashed_password=hashed_password,
-        language=language
-    )
-    
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
+    hashed_password = password  # يمكن استخدام auth.get_password_hash(password) إذا تريد تشفير
+    user = User(username, email, full_name, hashed_password, language)
+    fake_db["users"].append(user)
     
     return {"message": "User created successfully"}
+
 
 @app.get("/dashboard")
 async def dashboard(request: Request, lang: str = "en"):
