@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ translations.dashboard }}</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo" data-i18n="welcome">{{ translations.welcome }}</div>
+            <nav>
+                <ul>
+                    <li><a href="/" data-i18n="home">{{ translations.home }}</a></li>
+                    <li><a href="/dashboard" data-i18n="dashboard">{{ translations.dashboard }}</a></li>
+                    <li><a href="#" id="logoutBtn" data-i18n="logout">{{ translations.logout }}</a></li>
+                </ul>
+            </nav>
+            <div class="language-selector">
+                <button class="lang-btn" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="ar">AR</button>
+                <button class="lang-btn" data-lang="fr">FR</button>
+                <button class="lang-btn" data-lang="es">ES</button>
+            </div>
+        </header>
+
+        <main>
+            <h1 style="text-align: center; margin-bottom: 40px;" data-i18n="dashboard_title">{{ translations.dashboard_title }}</h1>
+            
+            <div class="dashboard-grid">
+                <div class="card">
+                    <i class="fas fa-user" style="font-size: 40px; color: #4facfe; margin-bottom: 20px;"></i>
+                    <h3 data-i18n="profile_info">{{ translations.profile_info }}</h3>
+                    <p data-i18n="profile_desc">View and edit your profile information</p>
+                    <button class="btn" style="margin-top: 15px;" data-i18n="view_profile">View Profile</button>
+                </div>
+                
+                <div class="card">
+                    <i class="fas fa-chart-bar" style="font-size: 40px; color: #4facfe; margin-bottom: 20px;"></i>
+                    <h3 data-i18n="stats">{{ translations.stats }}</h3>
+                    <p data-i18n="stats_desc">Check your statistics and progress</p>
+                    <button class="btn" style="margin-top: 15px;" data-i18n="view_stats">View Statistics</button>
+                </div>
+                
+                <div class="card">
+                    <i class="fas fa-history" style="font-size: 40px; color: #4facfe; margin-bottom: 20px;"></i>
+                    <h3 data-i18n="recent_activity">{{ translations.recent_activity }}</h3>
+                    <p data-i18n="activity_desc">See your recent activities</p>
+                    <button class="btn" style="margin-top: 15px;" data-i18n="view_activity">View Activity</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 MultiLang Website. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

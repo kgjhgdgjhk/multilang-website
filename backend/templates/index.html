@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ translations.welcome }}</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo" data-i18n="welcome">{{ translations.welcome }}</div>
+            <nav>
+                <ul>
+                    <li><a href="/" data-i18n="home">{{ translations.home }}</a></li>
+                    {% if request.cookies.get("access_token") %}
+                    <li><a href="/dashboard" data-i18n="dashboard">{{ translations.dashboard }}</a></li>
+                    <li><a href="#" id="logoutBtn" data-i18n="logout">{{ translations.logout }}</a></li>
+                    {% else %}
+                    <li><a href="/login" data-i18n="login">{{ translations.login }}</a></li>
+                    <li><a href="/register" data-i18n="register">{{ translations.register }}</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            <div class="language-selector">
+                <button class="lang-btn" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="ar">AR</button>
+                <button class="lang-btn" data-lang="fr">FR</button>
+                <button class="lang-btn" data-lang="es">ES</button>
+            </div>
+        </header>
+
+        <main>
+            <div class="hero">
+                <h1 data-i18n="welcome">{{ translations.welcome }}</h1>
+                <p data-i18n="welcome_message">{{ translations.welcome_message }}</p>
+                <button class="btn" onclick="window.location.href='/register'" data-i18n="get_started">
+                    {{ translations.get_started }}
+                </button>
+            </div>
+
+            <div class="features">
+                <h2 style="text-align: center; margin-bottom: 40px;" data-i18n="features">{{ translations.features }}</h2>
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <i class="fas fa-lock" style="font-size: 40px; color: #4facfe; margin-bottom: 20px;"></i>
+                        <h3 data-i18n="secure_login">{{ translations.secure_login }}</h3>
+                        <p data-i18n="secure_desc">{{ translations.secure_desc }}</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-globe" style="font-size: 40px; color: #4facfe; margin-bottom: 20px;"></i>
+                        <h3 data-i18n="multilingual">{{ translations.multilingual }}</h3>
+                        <p data-i18n="multilingual_desc">{{ translations.multilingual_desc }}</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-mobile-alt" style="font-size: 40px; color: #4facfe; margin-bottom: 20px;"></i>
+                        <h3 data-i18n="responsive">{{ translations.responsive }}</h3>
+                        <p data-i18n="responsive_desc">{{ translations.responsive_desc }}</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 MultiLang Website. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
