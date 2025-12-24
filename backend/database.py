@@ -21,7 +21,6 @@ db_instance = Session()
 def get_db():
     yield db_instance
 
-# دالة init_db وهمية
+# دالة init_db وهمية لتوافق main.py
 def init_db():
-    # لا حاجة لأي شيء، فقط لتوافق الكود مع main.py
     pass
